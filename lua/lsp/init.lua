@@ -14,10 +14,29 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 -- (you pick with <C-n>/<C-p>), and show each item's documentation.
 vim.o.completeopt = "menuone,noselect,popup"
 
--- Tab/Shift-Tab navigate the completion menu ONLY while it is open; otherwise
--- they insert a normal tab. expr = the returned value is fed as the key.
-vim.keymap.set("i", "<Tab>",   function() return vim.fn.pumvisible() == 1 and "<C-n>" or "<Tab>"   end, { expr = true, desc = "Completado: siguiente / tab" })
-vim.keymap.set("i", "<S-Tab>", function() return vim.fn.pumvisible() == 1 and "<C-p>" or "<S-Tab>" end, { expr = true, desc = "Completado: anterior / tab" })
+-- Tab/Shift-Tab, en orden de prioridad:
+--   1) menú de completado abierto -> siguiente/anterior item
+--   2) snippet activo (huecos pendientes) -> saltar al hueco siguiente/anterior
+--   3) en otro caso -> tab normal
+-- expr = el valor devuelto se inyecta como si fueran esas teclas. Los saltos de
+-- snippet se hacen aquí mismo (no como cadena de teclas) y devolvemos "".
+vim.keymap.set("i", "<Tab>", function()
+  if vim.fn.pumvisible() == 1 then return "<C-n>" end
+  if vim.snippet.active({ direction = 1 }) then
+    vim.schedule(function() vim.snippet.jump(1) end)
+    return ""
+  end
+  return "<Tab>"
+end, { expr = true, desc = "Completado/snippet: siguiente / tab" })
+
+vim.keymap.set("i", "<S-Tab>", function()
+  if vim.fn.pumvisible() == 1 then return "<C-p>" end
+  if vim.snippet.active({ direction = -1 }) then
+    vim.schedule(function() vim.snippet.jump(-1) end)
+    return ""
+  end
+  return "<S-Tab>"
+end, { expr = true, desc = "Completado/snippet: anterior / tab" })
 
 -- <CR> accepts the highlighted suggestion while the popup is open; otherwise
 -- it is a normal newline via autopairs_cr(), so the indented line between {}
