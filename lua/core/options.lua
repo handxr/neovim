@@ -22,7 +22,16 @@ vim.o.termguicolors = true
 vim.o.signcolumn = "yes" -- fixed column for diagnostics (avoids layout jumps)
 vim.o.cursorline = true
 vim.o.scrolloff = 8
-vim.o.wrap = false
+vim.o.wrap = true
+vim.o.linebreak = true   -- wrap at word boundaries
+vim.o.breakindent = true -- preserve indentation on wrapped lines
+
+-- Guide at 75% of the terminal width; recalculate when the layout changes
+vim.api.nvim_create_autocmd({ "VimResized", "BufEnter", "WinEnter" }, {
+  callback = function()
+    vim.wo.colorcolumn = tostring(math.floor(vim.o.columns * 0.75))
+  end,
+})
 
 -- Open new splits to the right / below instead of left / above
 vim.o.splitright = true
