@@ -24,6 +24,7 @@ vim.pack.add({
   { src = "https://github.com/nvim-lua/plenary.nvim" },          -- telescope + neogit dependency
   { src = "https://github.com/nvim-telescope/telescope.nvim" },
   { src = "https://github.com/NeogitOrg/neogit" },
+  { src = "https://github.com/lewis6991/gitsigns.nvim" },        -- gutter signs + per-line blame
   { src = "https://github.com/windwp/nvim-autopairs" },
   { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" }, -- main branch: needs nvim 0.12+ and the tree-sitter CLI
   { src = "https://github.com/windwp/nvim-ts-autotag" },                            -- auto close/rename HTML/JSX tags (uses treesitter)
@@ -37,6 +38,7 @@ require("plugins.autopairs")
 require("plugins.treesitter")
 require("plugins.render-markdown")
 require("plugins.neogit")
+require("plugins.gitsigns") -- after telescope: reuses its bcommits pickers
 
 require("lsp") -- shared LSP infra; must run before the lang modules
 
