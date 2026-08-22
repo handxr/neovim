@@ -1,13 +1,13 @@
 ---
 name: add-language
-description: Add full support for a language to this Neovim config — Treesitter parser + native LSP (vim.lsp.config/enable) + binary on $PATH. Use when the user wants to add or configure a new language (Go, Python, C, Bash…), says "soporte para <language>" / "support for <language>", or mentions a missing LSP server or treesitter parser.
+description: Add full support for a language to this Neovim config — Treesitter parser + native LSP (vim.lsp.config/enable) + binary on $PATH. Use when the user wants to add or configure a language (Go, Python, C, Bash…), asks for language support, or mentions a missing LSP server or Treesitter parser.
 ---
 
 # Add a language to the config
 
-This config is minimal and native (`vim.pack`, Neovim 0.11+ native LSP, Treesitter `main` branch, no `mason` or `lspconfig`). Each language is a **self-contained** file at `lua/lang/<name>.lua` that installs its parser, configures its server, and enables it — then a single `require` in `init.lua` loads it. Nothing about a language lives anywhere else, so adding one is one new file plus one line, and deleting that file fully removes it.
+This config is minimal and native (`vim.pack`, Neovim 0.12+ native LSP, Treesitter `main` branch, no `mason` or `lspconfig`). Each language is a **self-contained** file at `lua/lang/<name>.lua` that installs its parser, configures its server, and enables it — then a single `require` in `init.lua` loads it. Nothing about a language lives anywhere else, so adding one is one new file plus one line, and deleting that file fully removes it.
 
-Style rule, don't break it: **comments in English**, and explain to the user what you add and why — they build their config in phases and want to understand every line. Mirror an existing `lua/lang/*.lua` file; don't invent a new shape.
+Style rule: keep all text in English and add comments only when they explain non-obvious behavior or constraints. Mirror an existing `lua/lang/*.lua` file; don't invent a new shape.
 
 ## Step 1 — Gather the language's data
 
@@ -41,9 +41,7 @@ The three parts, in order:
 -- 1. Install the Treesitter parser(s). Add all if the language ships several.
 require("nvim-treesitter").install({ "<parser>" })
 
--- 2. Configure the server. English comment explaining what's SPECIFIC to this
---    language (where the binary comes from, what its settings do, why those
---    root_markers). Don't restate what the pattern already makes obvious.
+-- 2. Configure the server. Add a concise comment only for non-obvious behavior.
 vim.lsp.config("<server>", {
   cmd = { … },
   filetypes = { … },
@@ -54,7 +52,7 @@ vim.lsp.config("<server>", {
 vim.lsp.enable("<server>")
 ```
 
-**Done when** `lua/lang/<name>.lua` exists with all three parts and its comment.
+**Done when** `lua/lang/<name>.lua` exists with all three parts and any necessary rationale is documented.
 
 ## Step 3 — Wire it into init.lua
 

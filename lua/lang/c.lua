@@ -1,6 +1,3 @@
--- C: treesitter parser + clangd, provided by Xcode Command Line Tools on macOS
--- or the system package manager on Linux. Compilation databases and .clangd
--- identify configured projects; .git is the fallback.
 require("nvim-treesitter").install({ "c" })
 
 vim.lsp.config("clangd", {

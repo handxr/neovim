@@ -1,6 +1,5 @@
--- TypeScript / JavaScript: treesitter parsers + ts_ls language server.
 require("nvim-treesitter").install({
-  "javascript", "typescript", "tsx", -- tsx covers the typescriptreact filetype
+  "javascript", "typescript", "tsx",
 })
 
 vim.lsp.config("ts_ls", {

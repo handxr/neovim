@@ -1,5 +1,3 @@
--- Lua (used to edit this config itself). The "lua" parser is already installed
--- in plugins/treesitter.lua alongside the other base parsers.
 vim.lsp.config("lua_ls", {
   cmd = { "lua-language-server" },
   filetypes = { "lua" },
@@ -7,7 +5,7 @@ vim.lsp.config("lua_ls", {
   settings = {
     Lua = {
       runtime = { version = "LuaJIT" },
-      diagnostics = { globals = { "vim" } }, -- silence "undefined global vim"
+      diagnostics = { globals = { "vim" } },
       workspace = {
         library = vim.api.nvim_get_runtime_file("", true),
         checkThirdParty = false,
