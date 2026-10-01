@@ -1,9 +1,5 @@
 {
   "plugins": {
-    "catppuccin": {
-      "rev": "edefef779ab08ce1a4a404713e3012b0d202bd35",
-      "src": "https://github.com/catppuccin/nvim"
-    },
     "gitsigns.nvim": {
       "rev": "31d6fb2d618bca1482b9f274751ead5f03461408",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
@@ -28,6 +24,10 @@
     "oil.nvim": {
       "rev": "0fcc83805ad11cf714a949c98c605ed717e0b83e",
       "src": "https://github.com/stevearc/oil.nvim"
+    },
+    "onedarkpro.nvim": {
+      "rev": "f5fddfd5122fe00421e199151ae4fe8571a02898",
+      "src": "https://github.com/olimorris/onedarkpro.nvim"
     },
     "plenary.nvim": {
       "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
