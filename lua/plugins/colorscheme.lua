@@ -1,2 +1,1 @@
-vim.o.background = "dark"
-vim.cmd.colorscheme("onedark")
+vim.cmd.colorscheme("catppuccin-mocha")

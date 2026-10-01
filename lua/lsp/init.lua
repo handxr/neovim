@@ -1,6 +1,3 @@
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-
 vim.o.completeopt = "menuone,noselect,popup"
 
 -- Prioritize completion, then snippet jumps, then regular indentation.
@@ -41,26 +38,26 @@ vim.api.nvim_create_autocmd("LspAttach", {
     local map = function(lhs, rhs, desc)
       vim.keymap.set("n", lhs, rhs, { buffer = buf, desc = "LSP: " .. desc })
     end
-    map("gd", vim.lsp.buf.definition,      "go to definition")
-    map("gD", vim.lsp.buf.declaration,     "go to declaration")
-    map("gy", vim.lsp.buf.type_definition, "go to type definition")
+    map("gd", vim.lsp.buf.definition,  "go to definition")
+    map("gD", vim.lsp.buf.declaration, "go to declaration")
 
     -- Add alphanumeric triggers so completion opens while identifiers are typed.
+    -- Capabilities are per client, so extend them only on the first attach.
     local client = vim.lsp.get_client_by_id(args.data.client_id)
     if client and client:supports_method("textDocument/completion") then
       local cap = client.server_capabilities.completionProvider
-      local triggers = cap.triggerCharacters or {}
-      for c in ("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_"):gmatch(".") do
-        table.insert(triggers, c)
+      if not cap._identifier_triggers then
+        local triggers = cap.triggerCharacters or {}
+        for c in ("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_"):gmatch(".") do
+          table.insert(triggers, c)
+        end
+        cap.triggerCharacters = triggers
+        cap._identifier_triggers = true
       end
-      cap.triggerCharacters = triggers
       vim.lsp.completion.enable(true, client.id, buf, { autotrigger = true })
     end
   end,
 })
 
-vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Open diagnostic float" })
 vim.keymap.set("n", "[d", function() vim.diagnostic.jump({ count = -1, float = true }) end, { desc = "Previous diagnostic" })
 vim.keymap.set("n", "]d", function() vim.diagnostic.jump({ count = 1, float = true }) end, { desc = "Next diagnostic" })
-
-return { capabilities = capabilities }
