@@ -37,7 +37,7 @@ On first launch, `vim.pack` downloads the configured plugins and Treesitter begi
 :checkhealth
 ```
 
-A successful setup opens with the `onedark` colorscheme and lets you open the Oil file explorer with `-`.
+A successful setup opens with the `catppuccin-macchiato` colorscheme and lets you open the Oil file explorer with `-`.
 
 ## Features
 
@@ -83,13 +83,11 @@ LSP navigation mappings are buffer-local when a client attaches. Completion and 
 | --- | --- |
 | `gd` | Go to definition |
 | `gD` | Go to declaration |
-| `gy` | Go to type definition |
-| `<leader>e` | Open the diagnostic float |
-| `[d` / `]d` | Go to the previous / next diagnostic |
+| `[d` / `]d` | Go to the previous / next diagnostic and open its float |
 | `<Tab>` / `<S-Tab>` | Navigate completion items or snippet placeholders |
 | `<CR>` | Accept a selected completion or insert a newline |
 
-Neovim's native LSP mappings remain available, including `K`, `grr`, `grn`, `gra`, `gri`, and `gO`.
+Neovim's native LSP mappings remain available, including `K`, `grr`, `grn`, `gra`, `gri`, `grt` (type definition), `gO`, and `<C-w>d` (diagnostic float).
 
 ### Git
 
@@ -114,7 +112,7 @@ Each language module installs its Treesitter parser and enables its native LSP c
 | Assembly | `asm-lsp` | `.asm-lsp.toml`, `.git` |
 | C | `clangd` | `compile_commands.json`, `.clangd`, `.git` |
 | Go | `gopls` | `go.work`, `go.mod`, `.git` |
-| GraphQL | `graphql-lsp` | GraphQL config files, `package.json`, `.git` |
+| GraphQL | `graphql-lsp` | GraphQL config files only (does not start without one) |
 | Java | `jdtls` | Maven or Gradle files, `.git` |
 | Lua | `lua-language-server` | `.luarc.json`, `.luarc.jsonc`, `.git` |
 | PHP | `intelephense` | `composer.json`, `.git` |
