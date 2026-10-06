@@ -37,7 +37,7 @@ On first launch, `vim.pack` downloads the configured plugins and Treesitter begi
 :checkhealth
 ```
 
-A successful setup opens with the `catppuccin-macchiato` colorscheme and lets you open the Oil file explorer with `-`.
+A successful setup opens with the `onedark` colorscheme and lets you open the Oil file explorer with `-`.
 
 ## Features
 
